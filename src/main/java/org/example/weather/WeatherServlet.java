@@ -16,7 +16,6 @@ public class WeatherServlet extends HttpServlet  {
         this.weatherService = new WeatherService();
     }
 
-    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String city = req.getParameter("city");
