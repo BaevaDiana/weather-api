@@ -15,7 +15,7 @@ public class Main {
         server.setHandler(handler);
 
         server.start();
-        System.out.println("Server started at http://localhost:8080/weather?city=Krasnodar");
+        System.out.println("Сервер запущеен в http://localhost:8080/weather?city=Krasnodar");
         server.join();
     }
 }
