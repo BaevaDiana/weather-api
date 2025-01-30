@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/weather")
+//@WebServlet("/weather")
 public class WeatherServlet extends HttpServlet  {
     private final WeatherService weatherService;
 

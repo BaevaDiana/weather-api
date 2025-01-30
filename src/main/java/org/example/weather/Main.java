@@ -9,10 +9,10 @@ public class Main {
         Server server = new Server(8080);
         ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         handler.setContextPath("/");
-//        handler.addServlet(new ServletHolder(new WeatherServlet()), "/weather");
-//        server.setHandler(handler);
-        // Передаем класс сервлета вместо его экземпляра
-        handler.addServlet(new ServletHolder(WeatherServlet.class), "/weather");
+
+        // ручная регистрация сервлета
+        handler.addServlet(new ServletHolder(new WeatherServlet()), "/weather");
+        server.setHandler(handler);
 
         server.start();
         System.out.println("Server started at http://localhost:8080/weather?city=Krasnodar");
