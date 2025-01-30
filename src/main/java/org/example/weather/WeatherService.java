@@ -13,35 +13,44 @@ public class WeatherService {
         this.objectMapper = new ObjectMapper();
     }
 
-    public String getWeatherInfo(String city) throws IOException, InterruptedException {
-        // Получаем ответ от WeatherAPI
-        String response = weatherClient.getWeather(city);
-        JsonNode jsonNode = objectMapper.readTree(response);
+    public String getWeatherInfo(String city) {
+        try {
+            String response = weatherClient.getWeather(city); //запрос данных по API
+            JsonNode jsonNode = objectMapper.readTree(response); //парсинг JSON
 
-        // Извлекаем данные о местоположении
-        String locationName = jsonNode.get("location").get("name").asText();
-        String country = jsonNode.get("location").get("country").asText();
-        String localtime = jsonNode.get("location").get("localtime").asText();
+            if (jsonNode.has("error")) {
+                return "Ошибка: " + jsonNode.get("error").get("message").asText();
+            }
 
-        // Извлекаем данные о текущей погоде
-        double temp = jsonNode.get("current").get("temp_c").asDouble(); // Температура в градусах Цельсия
-        String condition = jsonNode.get("current").get("condition").get("text").asText(); // Описание погоды
-        double windSpeed = jsonNode.get("current").get("wind_kph").asDouble(); // Скорость ветра в км/ч
-        String windDirection = jsonNode.get("current").get("wind_dir").asText(); // Направление ветра
-        int humidity = jsonNode.get("current").get("humidity").asInt(); // Влажность
-        double feelsLike = jsonNode.get("current").get("feelslike_c").asDouble(); // Температура по ощущениям
-        double uvIndex = jsonNode.get("current").get("uv").asDouble(); // УФ-индекс
+            // извлечение данных для прогноза погоды
+            String locationName = jsonNode.path("location").path("name").asText("Неизвестно");
+            String country = jsonNode.path("location").path("country").asText("Неизвестно");
+            String localtime = jsonNode.path("location").path("localtime").asText("Неизвестно");
+            double temp = jsonNode.path("current").path("temp_c").asDouble(Double.NaN);
+            String condition = jsonNode.path("current").path("condition").path("text").asText("Нет данных");
+            double windSpeed = jsonNode.path("current").path("wind_kph").asDouble(Double.NaN);
+            String windDirection = jsonNode.path("current").path("wind_dir").asText("Нет данных");
+            int humidity = jsonNode.path("current").path("humidity").asInt(-1);
+            double feelsLike = jsonNode.path("current").path("feelslike_c").asDouble(Double.NaN);
+            double uvIndex = jsonNode.path("current").path("uv").asDouble(Double.NaN);
 
-        // Формируем строку с информацией о погоде
-        return String.format(
-                "Погода в %s, %s (Время: %s):\n" +
-                        "Температура: %.1f°C (по ощущениям: %.1f°C)\n" +
-                        "Условия: %s\n" +
-                        "Ветер: %.1f км/ч, направление: %s\n" +
-                        "Влажность: %d%%\n" +
-                        "УФ-индекс: %.1f",
-                locationName, country, localtime, temp, feelsLike, condition, windSpeed, windDirection, humidity, uvIndex
-        );
+            return String.format(
+                    "Погода в %s, %s (Время: %s):\n" +
+                            "Температура: %.1f°C (по ощущениям: %.1f°C)\n" +
+                            "Условия: %s\n" +
+                            "Ветер: %.1f км/ч, направление: %s\n" +
+                            "Влажность: %d%%\n" +
+                            "УФ-индекс: %.1f",
+                    locationName, country, localtime, temp, feelsLike, condition, windSpeed, windDirection, humidity, uvIndex
+            );
+
+        } catch (IOException e) {
+            System.err.println("Ошибка сети или API: " + e.getMessage());
+            return "Ошибка при получении данных о погоде.";
+        } catch (Exception e) {
+            System.err.println("Неизвестная ошибка: " + e.getMessage());
+            return "Произошла неизвестная ошибка.";
+        }
     }
 
 }
