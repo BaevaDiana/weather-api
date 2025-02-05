@@ -29,7 +29,9 @@
     wind_dir VARCHAR(10) NOT NULL,
     humidity INT NOT NULL,
     uv DOUBLE PRECISION NOT NULL
-);]]></console>
+);
+
+SELECT * FROM weather_data;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
