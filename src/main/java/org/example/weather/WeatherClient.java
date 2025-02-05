@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
 public class WeatherClient {
     private static final String API_KEY = "2517410755584e89a88142724252901";
     private static final String BASE_URL = "http://api.weatherapi.com/v1/current.json?key=";
-    private final HttpClient httpClient; //базовый URL для API
+    private final HttpClient httpClient; // базовый URL для API
 
     public WeatherClient() {
         this.httpClient = HttpClient.newHttpClient();
