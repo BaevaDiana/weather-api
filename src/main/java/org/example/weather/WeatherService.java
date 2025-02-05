@@ -7,50 +7,42 @@ import java.io.IOException;
 public class WeatherService {
     private final WeatherClient weatherClient;
     private final ObjectMapper objectMapper;
+    private final WeatherDatabase weatherDataBase;
 
     public WeatherService() {
         this.weatherClient = new WeatherClient();
         this.objectMapper = new ObjectMapper();
+        this.weatherDataBase = new WeatherDatabase();
     }
 
-    public String getWeatherInfo(String city) {
-        try {
-            String response = weatherClient.getWeather(city); //запрос данных по API
-            JsonNode jsonNode = objectMapper.readTree(response); //парсинг JSON
+    public String getWeatherInfo(String city) throws IOException, InterruptedException {
+        String response = weatherClient.getWeather(city);
+        JsonNode jsonNode = objectMapper.readTree(response);
 
-            if (jsonNode.has("error")) {
-                return "Ошибка: " + jsonNode.get("error").get("message").asText();
-            }
+        String locationName = jsonNode.get("location").get("name").asText();
+        String country = jsonNode.get("location").get("country").asText();
+        String local_time = jsonNode.get("location").get("localtime").asText();
+        double temp = jsonNode.get("current").get("temp_c").asDouble();
+        String condition = jsonNode.get("current").get("condition").get("text").asText();
+        double windSpeed = jsonNode.get("current").get("wind_kph").asDouble();
+        String windDirection = jsonNode.get("current").get("wind_dir").asText();
+        int humidity = jsonNode.get("current").get("humidity").asInt();
+        double feelsLike = jsonNode.get("current").get("feelslike_c").asDouble();
+        double uvIndex = jsonNode.get("current").get("uv").asDouble();
 
-            // извлечение данных для прогноза погоды
-            String locationName = jsonNode.path("location").path("name").asText("Неизвестно");
-            String country = jsonNode.path("location").path("country").asText("Неизвестно");
-            String localtime = jsonNode.path("location").path("localtime").asText("Неизвестно");
-            double temp = jsonNode.path("current").path("temp_c").asDouble(Double.NaN);
-            String condition = jsonNode.path("current").path("condition").path("text").asText("Нет данных");
-            double windSpeed = jsonNode.path("current").path("wind_kph").asDouble(Double.NaN);
-            String windDirection = jsonNode.path("current").path("wind_dir").asText("Нет данных");
-            int humidity = jsonNode.path("current").path("humidity").asInt(-1);
-            double feelsLike = jsonNode.path("current").path("feelslike_c").asDouble(Double.NaN);
-            double uvIndex = jsonNode.path("current").path("uv").asDouble(Double.NaN);
+        WeatherData weatherData = new WeatherData(locationName, country, local_time, temp, feelsLike, condition,
+                windSpeed, windDirection, humidity, uvIndex);
 
-            return String.format(
-                    "Погода в %s, %s (Время: %s):\n" +
-                            "Температура: %.1f°C (по ощущениям: %.1f°C)\n" +
-                            "Условия: %s\n" +
-                            "Ветер: %.1f км/ч, направление: %s\n" +
-                            "Влажность: %d%%\n" +
-                            "УФ-индекс: %.1f",
-                    locationName, country, localtime, temp, feelsLike, condition, windSpeed, windDirection, humidity, uvIndex
-            );
+        weatherDataBase.saveWeatherData(weatherData);
 
-        } catch (IOException e) {
-            System.err.println("Ошибка сети или API: " + e.getMessage());
-            return "Ошибка при получении данных о погоде.";
-        } catch (Exception e) {
-            System.err.println("Неизвестная ошибка: " + e.getMessage());
-            return "Произошла неизвестная ошибка.";
-        }
+        return String.format(
+                "Погода в %s, %s (Время: %s):\n" +
+                        "Температура: %.1f°C (по ощущениям: %.1f°C)\n" +
+                        "Условия: %s\n" +
+                        "Ветер: %.1f км/ч, направление: %s\n" +
+                        "Влажность: %d%%\n" +
+                        "УФ-индекс: %.1f",
+                locationName, country, local_time, temp, feelsLike, condition, windSpeed, windDirection, humidity, uvIndex
+        );
     }
-
 }
