@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class WeatherDatabase {
-    private final String url = "jdbc:postgresql://localhost:5433/weather_data_basee";
+    private final String url = "jdbc:postgresql://localhost:5433/weather_data_basee"; // PostgreSQL JDBC Driver(Type 4)
     private final String username = "admin";
     private final String password = "secret";
 
@@ -27,7 +27,7 @@ public class WeatherDatabase {
             stmt.setInt(9, data.getHumidity());
             stmt.setDouble(10, data.getUvIndex());
 
-            stmt.executeUpdate();
+            stmt.executeUpdate(); // выполнение операции INSERT
             System.out.println("Данные успешно сохранены в БД.");
         } catch (SQLException e) {
             System.err.println("Ошибка при сохранении данных о погоде: " + e.getMessage());

@@ -32,7 +32,6 @@ public class WeatherService {
 
         WeatherData weatherData = new WeatherData(locationName, country, local_time, temp, feelsLike, condition,
                 windSpeed, windDirection, humidity, uvIndex);
-
         // сохранение данных в БД
         weatherDataBase.saveWeatherData(weatherData);
 
