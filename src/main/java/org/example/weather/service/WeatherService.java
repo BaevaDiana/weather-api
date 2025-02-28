@@ -5,7 +5,8 @@ import org.example.weather.repository.WeatherDataRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-// реализация бизнес-логики, реализация класса WeatherService из JDBC
+// замена класса WeatherService из JDBC
+// реализация бизнес-логики
 @Service
 public class WeatherService {
     private final WeatherDataRepository repository;
@@ -18,7 +19,7 @@ public class WeatherService {
         List<WeatherData> allData = repository.findAll();
 
         if (allData.isEmpty()) {
-            return "Нет данных о погоде.";
+            return "Ошибка!Нет данных о погоде.";
         }
 
         double avgTemp = allData.stream().mapToDouble(WeatherData::getTemp).average().orElse(0);

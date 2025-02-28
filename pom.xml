@@ -57,7 +57,7 @@
       <version>1.5.8</version>
     </dependency>
 
-    <!-- Logback Core (опционально) -->
+    <!-- Logback Core -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
@@ -74,7 +74,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>3.3.4</version> <!-- или другая актуальная версия -->
+      <version>3.3.4</version>
     </dependency>
 
     <!-- Spring Boot Starter Web (для REST API) -->
@@ -117,7 +117,7 @@
     <dependency>
       <groupId>io.projectreactor</groupId>
       <artifactId>reactor-core</artifactId>
-      <version>3.6.11</version> <!-- Укажи актуальную версию -->
+      <version>3.6.11</version>
     </dependency>
   </dependencies>
 

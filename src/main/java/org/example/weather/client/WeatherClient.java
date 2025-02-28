@@ -11,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 // замена класса WeatherClient из JDBC
+// получение данных о текущей погоде из API
 @Component
 public class WeatherClient {
     private static final String API_KEY = "2517410755584e89a88142724252901";

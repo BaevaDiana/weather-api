@@ -4,21 +4,24 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.http.MediaType;
 import reactor.core.publisher.Mono;
 
+// взаимодействие с сервером, предоставляющим статистику погоды
 public class StatisticsClient {
     private final WebClient webClient;
 
+    // WebClient из Spring WebFlux для выполнения HTTP-запросов
     public StatisticsClient(String baseUrl) {
         this.webClient = WebClient.builder()
                 .baseUrl(baseUrl)
                 .build();
     }
 
+    // отправка запросы на заданный baseUrl
     public Mono<String> getWeatherStatistics() {
         return webClient.get()
                 .uri("/weather/statistics")  // эндпоинт сервера
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(String.class); //  JSON-ответ
+                .bodyToMono(String.class); // JSON-ответ
     }
 
     public static void main(String[] args) {

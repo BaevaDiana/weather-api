@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+// контроллер для работы с данными о погоде
 @RestController
 @RequestMapping("/api/weather")
 public class WeatherDataController {
@@ -17,13 +18,13 @@ public class WeatherDataController {
         this.weatherDataService = weatherDataService;
     }
 
-    // получить все данные о погоде
+    // все данные о погоде
     @GetMapping
     public List<WeatherData> getAllWeatherData() {
         return weatherDataService.getAllWeatherData();
     }
 
-    // получить данные о погоде по ID
+    // данные о погоде по ID
     @GetMapping("/{id}")
     public ResponseEntity<WeatherData> getWeatherDataById(@PathVariable Long id) {
         Optional<WeatherData> weatherData = weatherDataService.getWeatherDataById(id);
