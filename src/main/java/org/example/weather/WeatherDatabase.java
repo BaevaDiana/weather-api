@@ -1,5 +1,7 @@
 package org.example.weather;
 
+import org.example.weather.JDBC.WeatherData;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package org.example.weather;
+package org.example.weather.JDBC;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package org.example.weather;
+package org.example.weather.JDBC;
 
 public class WeatherData {
     private String locationName;
