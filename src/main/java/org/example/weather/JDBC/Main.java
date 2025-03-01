@@ -1,9 +1,8 @@
-package org.example.weather;
+package org.example.weather.JDBC;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.example.weather.JDBC.WeatherServlet;
 
 import java.util.Scanner;
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-// прослойка между контроллером и репозиторием (обеспечение бизнес-логики)
 @Service
 public class WeatherDataService {
     private final WeatherDataRepository weatherDataRepository;

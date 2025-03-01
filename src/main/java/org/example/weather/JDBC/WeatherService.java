@@ -2,7 +2,6 @@ package org.example.weather.JDBC;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.weather.WeatherDatabase;
 
 import java.io.IOException;
 

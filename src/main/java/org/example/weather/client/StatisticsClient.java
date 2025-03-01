@@ -8,14 +8,13 @@ import reactor.core.publisher.Mono;
 public class StatisticsClient {
     private final WebClient webClient;
 
-    // WebClient из Spring WebFlux для выполнения HTTP-запросов
+    // WebClient из Spring WebFlux (выполнение HTTP-запроса)
     public StatisticsClient(String baseUrl) {
         this.webClient = WebClient.builder()
                 .baseUrl(baseUrl)
                 .build();
     }
 
-    // отправка запросы на заданный baseUrl
     public Mono<String> getWeatherStatistics() {
         return webClient.get()
                 .uri("/weather/statistics")  // эндпоинт сервера

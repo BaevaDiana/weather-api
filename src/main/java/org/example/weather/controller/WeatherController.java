@@ -4,7 +4,7 @@ import org.example.weather.service.WeatherService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-// данный контроллер заменяет класс WeatherServlet из JDBC
+// замена класса WeatherServlet из JDBC
 // контроллер для получения статистики о погоде
 @RestController
 @RequestMapping("/weather")

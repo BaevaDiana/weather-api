@@ -2,11 +2,11 @@ package org.example.weather.model;
 
 import jakarta.persistence.*;
 
-// описание таблицы в БД, замена класса WeatherData из JDBC
+// замена класса WeatherData из JDBC
+// описание таблицы в БД
 @Entity
 @Table(name = "weather_data")
 public class WeatherData {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
